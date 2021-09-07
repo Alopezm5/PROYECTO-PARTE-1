@@ -1,6 +1,9 @@
+from datetime import date
 import os
-from datetime import datetime
+
+
 class Empresa():
+    idAumento=0
     def __init__(self,nom="",ruc=0,dire="",tele=0,ciud="",tipEmpr=""):
         self.nombre=nom
         self.ruc=ruc
@@ -8,6 +11,8 @@ class Empresa():
         self.telefono=tele
         self.ciudad=ciud
         self.tipoEmpresa=tipEmpr
+        Empresa.idAumento += 1
+
 
     def datosEmpresa(self):#3
         self.nombre=input("Ingresar nombre de la empresa: ")
@@ -23,6 +28,7 @@ class Empresa():
         print("La empresa de nombre {}\n De RUC #{} \n Está ubicada en {}\n Se puede comunicar al #{}\n Está empresa esta en la ciudad de {}\n Es una entidad {}".format(self.nombre,self.ruc,self.direccion, self.telefono,self.ciudad, self.tipoEmpresa))
 
 class Empleado(Empresa):
+    idAumento=0
     def __init__(self,nom="",cedu=0,dire="",tele=0,email="",estado="",profe=""):
         self.nombre=nom
         self.cedula=cedu
@@ -31,6 +37,7 @@ class Empleado(Empresa):
         self.correo=email
         self.estadocivil=estado
         self.profesion=profe
+        Empleado.idAumento += 1
 
     def empleado(self):
         self.nombre=input("Ingresar nombre del empleado: ")
@@ -38,20 +45,26 @@ class Empleado(Empresa):
         self.direccion=input("Ingresar la direccion del empleado: ")
         self.telefono=int(input("Ingresar numero de contacto del empleado: "))
         self.correo=input("Ingresar correo personal del empleado: ")
+        Empleado.idAumento += 1
 
     def empleadoObrero(self): 
         self.estadocivil=input("Ingresar estado civil del empleado: ")
+        Empleado.idAumento += 1
 
     def empleadoOficina(self):
       self.profesion=input("Ingresar profesion del empleado: ")
+      Empleado.idAumento += 1
 
     def mostrarempleado(self):
         print("El empleado: {} con # de C.I. {} \n Con direccion {}, y numero de contacto{}\n Y correo {}".format(self.nombre,self.cedula,self.direccion,self.telefono,self.correo))
         print("El empleado tiene una profesion de {}\n con un estado civil {}".format(self.profesion,self.estadocivil))
 
 class Departamento(Empleado):
+    idAumento=0
     def __init__(self,dep=""):
         self.departamento=dep
+        Departamento.idAumento += 1
+
 
     def departa(self):
         self.departamento=input("Ingresar el departamento al que pertenece el empleado: ")
@@ -60,6 +73,7 @@ class Departamento(Empleado):
         print("El empleado pertenece al departamento de: {}".format(self.departamento))
 
 class Pagos(Empleado):
+    idAumento=0
     def __init__(self, desper=0,valhora=0,hotraba=0,extra=0,suel=0,hrecar=0,hextra=0,pres=0,mcou=0,valho=0,sobtiem=0,comofi=0,antobre=0,iemple=0,cuopres=0,tot=0,liquid=0,cuota=0,anti=0,comi=0,fNomina="",fIngreso="",iess=0):
         self.permisos=desper
         self.valorhora=valhora
@@ -84,6 +98,7 @@ class Pagos(Empleado):
         self.fechaNomina=fNomina
         self.fechaIngreso=fIngreso
         self.iess=iess
+        Pagos.idAumento += 1
 
     def pagoNormal(self):
         self.sueldo=float(input("Ingresar sueldo del trabajador: $ "))
@@ -92,15 +107,15 @@ class Pagos(Empleado):
         self.comision=float(input("Ingresar valor de la comsion: $"))
         self.antiguedad=int(input("Ingresar antiguedad: "))
         self.iess=float(input("Ingresar valor del iees recordar que debe ser porcentuado Ejemplo si quiere decir 20% debe ingresar 0.20: "))
+        Pagos.idAumento += 1
         
     def pagoExtra(self):
         self.horasRecargo=int(input("Ingresar horas de recargo: "))
         self.horasExtraordinarias=int(input("Ingresar horas extraordinarias: "))
-        # formato_fecha = "%Y-%m-%d"
-        self.fechaNomina=int(input("Ingresar fecha de nomida (formato añomesdia): "))
-        self.fechaIngreso=int(input("Ingresar fecha de ingreso (formato añomesdia): "))
-        # self.fechaNomina=datetime.strptime(self.fechaNomina,formato_fecha)
-        # self.fechaIngreso=datetime.strptime(self.fechaIngreso,formato_fecha)
+        self.fechaNomina=float(input("Ingresar fecha de nomida (formato año-mes-dia): "))
+        self.fechaIngreso=float(input("Ingresar fecha de ingreso (formato año-mes-dia): "))
+        Pagos.idAumento += 1
+
 
     def calculoSueldo(self):
         self.valor_hora=self.sueldo/240
@@ -112,6 +127,8 @@ class Pagos(Empleado):
         self.toting = self.sueldo+self.sobretiempo+ self.comEmpOficina + self.antiEmpObrero
         self.totdes = self.iessEmpleado + self.prestamo
         self.liquidoRecibir = self.toting - self.totdes
+        Pagos.idAumento += 1
+
 
     def mostrarSueldo(self):
         print("SUELDO BASE")
@@ -138,13 +155,12 @@ os.system ("cls")
 depa=Departamento()
 depa.departa()
 pag=Pagos()
-pag.pagoNormal()
-os.system ("cls")  
+pag.pagoNormal()   
 pag.pagoExtra()
-os.system ("cls")
 pag.calculoSueldo()
 os.system ("cls")
 
+print("")
 emp.mostrarEmpresa()
 print("")
 emple.mostrarempleado()
@@ -152,3 +168,4 @@ print("")
 depa.mostrarDeparta()
 print("")
 pag.mostrarSueldo()
+
